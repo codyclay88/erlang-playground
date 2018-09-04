@@ -2,7 +2,27 @@
 % compile this module by typing c(temps).
 
 -module(list_helpers).
--export([list_max/1]).
+-export([list_max/1, print_all/1, filter/2, is_even/1]).
+
+filter(_P,[]) -> [];
+
+filter(P,[X|Xs]) ->
+    case P(X) of
+        true -> 
+            [X|filter(P,Xs)];
+        _ -> 
+            filter(P,Xs)
+    end.
+
+is_even(X) -> 
+    X rem 2 == 0.
+
+print_all([]) -> 
+    io:format("~n");
+
+print_all([X|Xs]) -> 
+    io:format("~p\t", [X]),
+    print_all(Xs).
 
 list_max([Head|Rest]) ->
     list_max(Rest, Head).
